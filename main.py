@@ -16,6 +16,36 @@ class Student:
         else:
             return 'Ошибка'
 
+    def average_grade(self):
+        total_grades = sum(sum(self.grades.values(), []))
+        quantity = len(sum(self.grades.values(), []))
+        return total_grades / quantity if quantity > 0 else 0
+
+    def __str__(self):
+        return (f"Имя: {self.name}\n"
+                f"Фамилия: {self.surname}\n"
+                f"Средняя оценка за лекции: {self.average_grade()}\n"
+                f"Курсы в процессе изучения: {', '.join(self.courses_in_progress)}\n"
+                f"Завершенные курсы: {', '.join(self.finished_courses)}")
+
+    def __lt__(self, other):
+        return self.average_grade() < other.average_grade()
+
+    def __le__(self, other):
+        return self.average_grade() <= other.average_grade()
+
+    def __eq__(self, other):
+        return self.average_grade() == other.average_grade()
+
+    def __ne__(self, other):
+        return self.average_grade() != other.average_grade()
+
+    def __gt__(self, other):
+        return self.average_grade() > other.average_grade()
+
+    def __ge__(self, other):
+        return self.average_grade() >= other.average_grade()
+
 
 class Mentor:
     def __init__(self, name, surname):
@@ -29,9 +59,36 @@ class Lecturer(Mentor):
         super().__init__(name, surname)
         self.grades_lecturer = {}
 
+    def average_grade(self):
+        total_grades = sum(sum(self.grades_lecturer.values(), []))
+        quantity = len(sum(self.grades_lecturer.values(), []))
+        return total_grades / quantity if quantity > 0 else 0
+
+    def __str__(self):
+        return f"Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за лекции: {self.average_grade()}"
+
+    def __lt__(self, other):
+        return self.average_grade() < other.average_grade()
+
+    def __le__(self, other):
+        return self.average_grade() <= other.average_grade()
+
+    def __eq__(self, other):
+        return self.average_grade() == other.average_grade()
+
+    def __ne__(self, other):
+        return self.average_grade() != other.average_grade()
+
+    def __gt__(self, other):
+        return self.average_grade() > other.average_grade()
+
+    def __ge__(self, other):
+        return self.average_grade() >= other.average_grade()
 
 class Reviewer(Mentor):
-    pass
+    def __str__(self):
+        return f"Имя: {self.name}\nФамилия: {self.surname}"
+
 
     def rate_hw(self, student, course, grade):
         if isinstance(student, Student) and course in self.courses_attached and course in student.courses_in_progress:
@@ -65,4 +122,11 @@ cool_student.rate_lr(best_lecturer, 'Python', 10)
 
 
 print(best_student.grades)
+
 print(best_student.grades)
+
+print(cool_reviewer)
+
+print(best_lecturer)
+
+print(best_student)
